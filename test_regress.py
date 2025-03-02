@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from datetime import datetime
 
 def test_pagination_in_volunteer_list(browser):
-    #переход с 1 на 2 страницу пагинации в списке волонтеров.
+    #переход с 1 на 2 страницу пагинации в списке волонтеров
     link="https://feedapp-dev.insomniafest.ru/login"
     page = BasePage(browser, link)
     page.open()
@@ -15,8 +15,9 @@ def test_pagination_in_volunteer_list(browser):
     page.pagination()
     active_page = browser.find_element(By.CLASS_NAME, "ant-pagination-item-active")
     time.sleep(1)
-    assert "2" in active_page.text, "Ошибка: Страница 2 не активна или текст отсутствует!"
     # проверяем что активная страница имеет 2 в наименовании
+    assert "2" in active_page.text, "Ошибка: Страница 2 не активна или текст отсутствует!"
+
 
 def test_pagination_in_feed_history(browser):
     #переход с 1 на 2 страницу пагинации в истории питания.
@@ -29,13 +30,13 @@ def test_pagination_in_feed_history(browser):
     page.meal_history_pagination()
     active_page = browser.find_element(By.CLASS_NAME, "ant-pagination-item-active")
     time.sleep(1)
+    #проверяем что активная страница имеет 2 в наименовании
     assert "2" in active_page.text, "Ошибка: Страница 2 не активна или текст отсутствует!"
-    # проверяем что активная страница имеет 2 в наименовании
 
 
 def test_create_new_meal(browser):
+    # создаем прием пищи, сверяем редирект на урл после сохранения и что дата крайней записи - сегодня
     link = "https://feedapp-dev.insomniafest.ru/feed-transaction"
-    # создаем прием пищи, но сверяем что дата крайней записи - сегодня - - НЕ РАБОТАЕТ удаление
     page = BasePage(browser, link)
     page.open()
     page.first_window()
@@ -45,15 +46,16 @@ def test_create_new_meal(browser):
     time.sleep(1)
     first_row_text = page.meal_table()
     today_date = datetime.now().strftime("%d/%m/%y")
+    # приверка урла
     assert browser.current_url == "https://feedapp-dev.insomniafest.ru/feed-transaction?pageSize=10&current=1"
+    # приверка даты посреднего созданного приема пищи. Примечание - не сработает, если сегодня кормили руками.
     assert  today_date in first_row_text, f"Ошибка! Ожидали сегодняшнюю дату, а получили {first_row_text}"
-    # проверяем, что транзакция создана и дата последней записи - сегодня
     print("✅ Запись успешно создана!")
 
 
 def test_delete_created_new_meal(browser):
+    # не тест, вспомогательная функция для удаления созданного выше приема пищи.
     link = "https://feedapp-dev.insomniafest.ru/feed-transaction"
-    # создаем прием пищи, но сверяем что дата крайней записи - сегодня - - НЕ РАБОТАЕТ удаление
     page = BasePage(browser, link)
     page.open()
     page.first_window()
@@ -66,7 +68,7 @@ def test_delete_created_new_meal(browser):
     print("🗑 Запись успешно удалена!")
 
 def test_create_group_badge(browser):
-    # создаем вручную групповой бейдж и проверяем счетчик
+    # создаем вручную групповой бейдж и проверяем счетчик бейджей
     link = "https://feedapp-dev.insomniafest.ru/group-badges"
     page = BasePage(browser, link)
     page.open()
@@ -88,6 +90,7 @@ def test_create_group_badge(browser):
     print("✅ Бейдж успешно создан! Счетчик увеличился на 1!")
 
 def test_delete_group_badge(browser):
+    # не тест, вспомогательная функция для удаления созданного выше приема пищи.
     link = "https://feedapp-dev.insomniafest.ru/group-badges"
     page = BasePage(browser, link)
     page.open()
@@ -100,6 +103,7 @@ def test_delete_group_badge(browser):
     last_row = browser.find_elements(By.CSS_SELECTOR, "tr.ant-table-row")[-1]
     columns = last_row.find_elements(By.CSS_SELECTOR, "td")
     column1 = columns[1].text
+    # если тестовое имя не найдено, ничего удалять не нужно
     if "autotest" in column1:
         page.delete_group_badge()
         assert 1==1
@@ -109,6 +113,7 @@ def test_delete_group_badge(browser):
         print("Нечего удалять!")
 
 def test_create_custom_field(browser):
+    # создание нового кастомного поля
     link = "https://feedapp-dev.insomniafest.ru/volunteers"
     page = BasePage(browser, link)
     page.open()
@@ -129,6 +134,7 @@ def test_create_custom_field(browser):
     columns = last_row.find_elements(By.CSS_SELECTOR, "td")
     column1 = columns[0].text
     column2 = columns[1].text
+    # сверяем, что последняя запись - наша по 2 признакам и что счетчик числа полей изменился на 1
     assert "user" in column1, "Название поля не совпадает!"
     assert "string" in column2, "Тип поля не совпадает!"
     assert int(rows_before)-4==rows_after, "число записей изменилось не на 1!"
@@ -223,7 +229,7 @@ def test_edit_new_user(browser):
     # перейти на страницу создания нового юзера
     page.find_user()
     page.edit_user()
-    time.sleep(2)
+    time.sleep(3)
     assert browser.current_url== "https://feedapp-dev.insomniafest.ru/volunteers"
 
 def test_delete_new_user(browser):

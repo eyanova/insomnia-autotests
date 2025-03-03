@@ -244,6 +244,9 @@ class BasePage:
         find = self.browser.find_element(*create_user.FIND_INPUT)
         find.send_keys("Test_name")
         time.sleep(1)
+
+
+    def open_user(self):
         first_row = self.browser.find_elements(By.CSS_SELECTOR, "tr.ant-table-row")[0]
         column = first_row.find_elements(By.CSS_SELECTOR, "td")[0]
         column.click()
@@ -278,12 +281,38 @@ class BasePage:
         save = self.browser.find_element(*create_user.SAVE_BUTTON)
         save.click()
 
+    def check_username_after_editing(self):
+        find_name = self.browser.find_element(By.CSS_SELECTOR, "td.ant-table-cell:first-child").text
+        return find_name
+
+    def check_username_after_deleting(self):
+        find = self.browser.find_element(*create_user.FIND_INPUT)
+        find.send_keys("Test_name_1")
+        time.sleep(1)
+
+
     def delete_user(self):
         delete1 = self.browser.find_element(*create_user.DELETE_USER_BUTTON)
         delete1.click()
         time.sleep(1)
         delete2 = self.browser.find_element(*create_user.DELETE_CONFIRM)
         delete2.click()
+
+    def receive_volunteers_count(self):
+        amount = self.browser.find_element(*create_user.USERS_COUNTER)
+        amount_number = int(amount.text)
+        return amount_number
+
+    def clear_input_field(self):
+        find = self.browser.find_element(*create_user.FIND_INPUT)
+        find.send_keys(Keys.END)  # Перемещаем курсор в конец строки
+        for _ in range(len(find.get_attribute("value"))):
+            find.send_keys(Keys.BACKSPACE)  # Удаляем символы один за другим
+
+
+
+
+
 
 
 

@@ -209,13 +209,20 @@ def test_create_new_user(browser):
     page.first_window()
     page.login_admin()
     # перейти на страницу создания нового юзера
+    time.sleep(3)
+    counter1 = page.receive_volunteers_count()
     page.go_to_create_user()
     time.sleep(1)
     page.create_user()
     time.sleep(1)
     page.save_in_user_page()
     time.sleep(2)
+    counter2 = page.receive_volunteers_count()
+    page.find_user()
+    user_name = page.check_username_after_editing()
     assert browser.current_url== "https://feedapp-dev.insomniafest.ru/volunteers"
+    assert counter1+1 == counter2, "Счетчик не увеличился на 1!!!"
+    assert user_name == "Test_name"
 
 def test_edit_new_user(browser):
     # найти созданного юзера и отредактировать его
@@ -225,12 +232,20 @@ def test_edit_new_user(browser):
     time.sleep(1)
     page.first_window()
     page.login_admin()
-    time.sleep(2)
+    time.sleep(3)
+    counter1 = page.receive_volunteers_count()
     # перейти на страницу создания нового юзера
     page.find_user()
+    page.open_user()
     page.edit_user()
     time.sleep(3)
+    user_name = page.check_username_after_editing()
+    page.clear_input_field()
+    time.sleep(3)
+    counter2 = page.receive_volunteers_count()
     assert browser.current_url== "https://feedapp-dev.insomniafest.ru/volunteers"
+    assert counter1 == counter2, "Счетчик изменился!!!"
+    assert user_name == "Test_name_1"
 
 def test_delete_new_user(browser):
     # найти созданного юзера и отредактировать его
@@ -241,8 +256,17 @@ def test_delete_new_user(browser):
     page.first_window()
     page.login_admin()
     time.sleep(2)
+    counter1 = page.receive_volunteers_count()
     page.find_user()
+    page.open_user()
     page.delete_user()
-    time.sleep(2)
+    time.sleep(3)
+    page.clear_input_field()
+    time.sleep(3)
+    counter2 = page.receive_volunteers_count()
+    page.check_username_after_deleting()
+    counter3 = page.receive_volunteers_count()
     assert browser.current_url == "https://feedapp-dev.insomniafest.ru/volunteers"
+    assert counter1 == counter2+1, "Счетчик не уменьшился на 1!!!"
+    assert counter3 == 0
 

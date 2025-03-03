@@ -73,3 +73,4 @@ class create_user():
 
     DELETE_USER_BUTTON = (By.XPATH, "//button[span[text()='Удалить волонтера']]")
     DELETE_CONFIRM = (By.XPATH, "//button[span[text()='Да']]")
+    USERS_COUNTER = (By.CSS_SELECTOR, 'span[data-testid="volunteer-count"]')

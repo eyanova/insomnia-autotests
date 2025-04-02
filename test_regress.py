@@ -1,4 +1,5 @@
-from main_page import *
+# from . import main_page
+from .main_page import MainPage
 import time
 from selenium.webdriver.common.by import By
 from datetime import datetime

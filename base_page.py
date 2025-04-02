@@ -3,13 +3,13 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from .locators import registration
-from .locators import meal_create
-from .locators import badge_create
-from .locators import feed_history_pagination
-from .locators import group_badges
-from .locators import custom_field
-from .locators import create_user
+from locators import registration
+from locators import meal_create
+from locators import badge_create
+from locators import feed_history_pagination
+from locators import group_badges
+from locators import custom_field
+from locators import create_user
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time

@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  chrome:
+    image: selenium/standalone-chromium:latest
+    hostname: chrome
+    privileged: true
+    shm_size: 2g
+  tests:
+    build: .
+    command: python -m pytest test_regress.py
+    depends_on:
+      - chrome

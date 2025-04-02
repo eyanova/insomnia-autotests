@@ -105,8 +105,11 @@ def test_delete_group_badge(browser):
     column1 = columns[1].text
     # если тестовое имя не найдено, ничего удалять не нужно
     if "autotest" in column1:
+        counter1 = page.receive_badges_count()
         page.delete_group_badge()
+        counter2 = page.receive_badges_count()
         assert 1==1
+        assert counter1 != counter2
         print("Бейдж удален!")
     else:
         assert 1==1
@@ -170,7 +173,7 @@ def test_add_and_delete_volunteer_from_group_badge(browser):
     page.login_admin()
     #идем в редактирование последнего бейджика
     page.go_to_edit_badge()
-    time.sleep(1)
+    time.sleep(2)
     #фиксируем число на счетчике
     count1 = page.receive_count_of_volunteers_in_group_badge()
     #добавляем волонтера
@@ -185,7 +188,7 @@ def test_add_and_delete_volunteer_from_group_badge(browser):
     time.sleep(1)
     #фиксируем счетчик
     count3 = page.receive_count_of_volunteers_in_group_badge()
-    #удаляем волонетра
+    #удаляем волонтера
     time.sleep(1)
     page.delete_volunteer_from_group_badge()
     #фиксируем счётчик и сохраняем
@@ -216,7 +219,7 @@ def test_create_new_user(browser):
     page.create_user()
     time.sleep(1)
     page.save_in_user_page()
-    time.sleep(2)
+    time.sleep(3)
     counter2 = page.receive_volunteers_count()
     page.find_user()
     user_name = page.check_username_after_editing()
@@ -255,7 +258,7 @@ def test_delete_new_user(browser):
     time.sleep(1)
     page.first_window()
     page.login_admin()
-    time.sleep(2)
+    time.sleep(3)
     counter1 = page.receive_volunteers_count()
     page.find_user()
     page.open_user()
@@ -270,3 +273,13 @@ def test_delete_new_user(browser):
     assert counter1 == counter2+1, "Счетчик не уменьшился на 1!!!"
     assert counter3 == 0
 
+def test_scan_qr(browser):
+    link = "https://feedapp-dev.insomniafest.ru/volunteers"
+    page = BasePage(browser, link)
+    page.open()
+    time.sleep(2)
+    page.first_window_qr()
+    time.sleep(2)
+    page.scan_user()
+    time.sleep(2)
+    assert browser.current_url == "https://feedapp-dev.insomniafest.ru/volunteers"

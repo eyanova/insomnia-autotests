@@ -1,5 +1,3 @@
-from tabnanny import check
-
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -22,6 +20,7 @@ class BasePage:
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
+        self.driver = browser
 
 
     def open(self):
@@ -45,6 +44,19 @@ class BasePage:
     def first_window(self):
         first_button = self.browser.find_element(*registration.CHOOSE_LOGIN_TYPE)
         first_button.click()
+
+    def first_window_qr(self):
+        first_button = self.browser.find_element(*registration.CHOOSE_QR_TYPE)
+        first_button.click()
+
+    def scan_user(self):
+        self.driver.execute_script("""
+            document.body.dispatchEvent(new CustomEvent("scan", { 
+                detail: { scanCode: "e93e5fae99bd43b4b77d5c0235b14da9" } 
+            }));
+        """)
+        time.sleep(2)
+
 
     def login_admin(self):
         login = "admin"
@@ -173,8 +185,8 @@ class BasePage:
         if insert_name_raw:
             insert_name=insert_name_raw[-1]
             insert_name.click()
-        insert_name.send_keys("Янова")
-        time.sleep(1)
+        insert_name.send_keys("Корица")
+        time.sleep(5)
         checkbox = self.browser.find_elements(*group_badges.CHECKBOX)
         if checkbox:
             last_checkbox = checkbox[-1]  # Берем последний чекбокс
@@ -201,6 +213,13 @@ class BasePage:
         time.sleep(2)
         confirm = self.browser.find_element(By.XPATH, "//button[span[text()='Удалить']]")
         confirm.click()
+        time.sleep(2)
+
+    def receive_badges_count(self):
+        amount = self.browser.find_element(By.CSS_SELECTOR, "li.ant-pagination-total-text")
+        amount_number = amount.text
+        return amount_number
+
 
     def save_in_group_badge(self):
         saving = self.browser.find_element(*group_badges.SAVE_BUTTON)
@@ -243,12 +262,12 @@ class BasePage:
     def find_user(self):
         find = self.browser.find_element(*create_user.FIND_INPUT)
         find.send_keys("Test_name")
-        time.sleep(1)
+        time.sleep(3)
 
 
     def open_user(self):
         first_row = self.browser.find_elements(By.CSS_SELECTOR, "tr.ant-table-row")[0]
-        column = first_row.find_elements(By.CSS_SELECTOR, "td")[0]
+        column = first_row.find_elements(By.CSS_SELECTOR, "td")[1]
         column.click()
         time.sleep(2)
 
@@ -282,8 +301,11 @@ class BasePage:
         save.click()
 
     def check_username_after_editing(self):
-        find_name = self.browser.find_element(By.CSS_SELECTOR, "td.ant-table-cell:first-child").text
-        return find_name
+        first_row = self.browser.find_elements(By.CSS_SELECTOR, "tr.ant-table-row")[0]
+        column = first_row.find_elements(By.CSS_SELECTOR, "td")[1]
+        column_text = column.text
+        time.sleep(2)
+        return column_text
 
     def check_username_after_deleting(self):
         find = self.browser.find_element(*create_user.FIND_INPUT)

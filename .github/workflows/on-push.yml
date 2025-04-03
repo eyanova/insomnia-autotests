@@ -1,0 +1,86 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} GitHub Actions 🚀
+on: [push]
+jobs:
+  try_gitlab_cicd:
+    runs-on: ubuntu-latest
+
+    # steps:
+      # - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      # - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      # - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      # - name: Check out repository code
+      #   uses: actions/checkout@v4
+
+      # - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      # - run: echo "The workflow is now ready to test your code on the runner."
+
+      # - name: Install Docker using Docker's official script
+      #   run: |
+      #     curl -fsSL https://get.docker.com -o get-docker.sh
+      #     sudo sh get-docker.sh
+      #   continue-on-error: false
+      # - name: Install Docker Compose
+      #   run: |
+      #     sudo curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      #     sudo chmod +x /usr/local/bin/docker-compose
+      #     docker-compose --version
+      #   continue-on-error: false
+
+
+    # services:
+    #   docker:
+    #     # image: docker:dind
+    #     image: docker:latest
+    #     options: --privileged
+    #     # --shm-size=2g
+    #     # volumes:
+    #     #   - /var/run/docker.sock:/var/run/docker.sock:ro
+
+    container:
+      image: ubuntu:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Docker plus Compose
+        run: |
+          apt-get update
+          apt-get install -y docker-compose-v2
+
+      - name: Check Docker
+        run: |
+          docker compose version
+          # docker-compose version
+          docker version
+          docker info
+        continue-on-error: true
+
+      - name: Check browser
+        run: |
+          dpkg -l | grep chrom || echo Not found
+          type chromium || echo Not found
+          type chrome || echo Not found
+          dpkg -l | grep firefox || echo Not found
+        continue-on-error: true
+
+      # - name: List files in the repository
+      #   run: |
+      #     pwd; ls; echo 1000
+
+      - name: Curl check inet
+        run: |
+          apt-get install -y curl
+          ip=$(curl https://wtfismyip.com/text) && echo IP is $ip || { echo Get ip failed; false; }
+        continue-on-error: true
+
+      - name: 🍏 Try some testing
+        run: |
+          # docker compose build
+          # echo 99905
+          # docker compose run tests
+          bash run_tests.sh
+
+      - run: echo "This job's status is ${{ job.status }}."
+

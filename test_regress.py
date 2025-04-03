@@ -20,7 +20,6 @@ def test_pagination_in_volunteer_list(browser):
     # проверяем что активная страница имеет 2 в наименовании
     assert "2" in active_page.text, "Ошибка: Страница 2 не активна или текст отсутствует!"
 
-
 def test_pagination_in_feed_history(browser):
     #переход с 1 на 2 страницу пагинации в истории питания.
     link = "https://feedapp-dev.insomniafest.ru/feed-transaction"

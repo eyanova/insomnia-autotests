@@ -7,13 +7,8 @@ from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 import time
 
-from .locators import registration
-from .locators import meal_create
-from .locators import badge_create
-from .locators import feed_history_pagination
-from .locators import group_badges
-from .locators import custom_field
-from .locators import create_user
+from locators import *
+# registration meal_create badge_create feed_history_pagination group_badges custom_field create_user
 
 class BasePage:
     def __init__(self, browser, url, timeout=10):

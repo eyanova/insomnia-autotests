@@ -1,8 +1,9 @@
-# from . import main_page
-from .main_page import MainPage
 import time
 from selenium.webdriver.common.by import By
 from datetime import datetime
+
+# from main_page import MainPage
+from base_page import BasePage
 
 def test_pagination_in_volunteer_list(browser):
     #переход с 1 на 2 страницу пагинации в списке волонтеров

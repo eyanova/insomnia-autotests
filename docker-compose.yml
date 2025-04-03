@@ -8,6 +8,7 @@ services:
     shm_size: 2g
   tests:
     build: .
-    command: python -m pytest test_regress.py
+    command: python -m pytest test_minimal.py test_regress.py
     depends_on:
       - chrome
+

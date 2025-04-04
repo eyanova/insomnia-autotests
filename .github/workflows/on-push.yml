@@ -57,13 +57,15 @@ jobs:
           docker info
         continue-on-error: true
 
-      - name: Check browser
-        run: |
-          dpkg -l | grep chrom || echo Not found
-          type chromium || echo Not found
-          type chrome || echo Not found
-          dpkg -l | grep firefox || echo Not found
-        continue-on-error: true
+      # - name: Check browser
+      #   run: |
+      #     apt-get install -y chromium
+      #     echo CHECK BROWSERS
+      #     dpkg -l | grep firefox || echo FF not installed
+      #     dpkg -l | grep chrom || echo Cb not installed
+      #     type chromium || echo No chromium
+      #     type chrome || echo No chrome
+      #   continue-on-error: true
 
       # - name: List files in the repository
       #   run: |

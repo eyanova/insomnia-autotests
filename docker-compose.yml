@@ -11,6 +11,5 @@ services:
     # network_mode: host
     # command: python -m pytest test_minimal.py test_regress.py
     command: bash -c "sleep 10s && python -m pytest test_regress_one.py"
-    # command: python -m pytest test_minimal.py test_regress_one.py
     depends_on:
       - chrome

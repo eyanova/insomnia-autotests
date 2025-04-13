@@ -1,7 +1,9 @@
-from .main_page import *
 import time
 from selenium.webdriver.common.by import By
 from datetime import datetime
+
+# from main_page import MainPage
+from base_page import BasePage
 
 def test_pagination_in_volunteer_list(browser):
     #переход с 1 на 2 страницу пагинации в списке волонтеров
@@ -17,7 +19,6 @@ def test_pagination_in_volunteer_list(browser):
     time.sleep(1)
     # проверяем что активная страница имеет 2 в наименовании
     assert "2" in active_page.text, "Ошибка: Страница 2 не активна или текст отсутствует!"
-
 
 def test_pagination_in_feed_history(browser):
     #переход с 1 на 2 страницу пагинации в истории питания.

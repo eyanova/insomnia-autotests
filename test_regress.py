@@ -194,7 +194,7 @@ def test_add_and_delete_volunteer_from_group_badge(browser):
     #фиксируем счётчик и сохраняем
     count4 = page.receive_count_of_volunteers_in_group_badge()
     page.save_in_group_badge()
-    time.sleep(1)
+    time.sleep(3)
     #в ассертах сверяем возврат на урл групповых бейджей после сохранения и мэтч счётчиков между собой
     assert browser.current_url == "https://feedapp-dev.insomniafest.ru/group-badges"
     print("До-", count1, "человек в бейдже")

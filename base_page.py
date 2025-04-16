@@ -180,13 +180,13 @@ class BasePage:
     def add_volunteer_in_group_badge(self):
         add_new = self.browser.find_element(*group_badges.ADD_VOLUNTEER)
         add_new.click()
-        time.sleep(3)
+        time.sleep(6)
         insert_name_raw = self.browser.find_elements(*group_badges.SEARCH_FIELD)
         if insert_name_raw:
             insert_name=insert_name_raw[-1]
             insert_name.click()
         insert_name.send_keys("Корица")
-        time.sleep(5)
+        time.sleep(10)
         checkbox = self.browser.find_elements(*group_badges.CHECKBOX)
         if checkbox:
             last_checkbox = checkbox[-1]  # Берем последний чекбокс

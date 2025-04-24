@@ -1,15 +1,26 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   chrome:
-    image: selenium/standalone-chromium:latest
+    # image: selenium/standalone-chromium:latest
+    image: selenium/standalone-chromium:135.0
     hostname: chrome
     privileged: true
     shm_size: 2g
   tests:
-    build: .
-    # network_mode: host
-    # command: python -m pytest test_minimal.py test_regress.py
+    # build: .
+    build:
+      context: .
+      network: host
     command: bash -c "sleep 10s && python -m pytest test_regress.py"
     depends_on:
       - chrome
+      # - pinger
+  pinger: # for troubleshoot
+    build:
+      context: .
+      # dockerfile: Dockerfile
+      network: host
+    # network_mode: host
+    command: bash -c "ping google.com -c 3 ; sleep 1s"
+

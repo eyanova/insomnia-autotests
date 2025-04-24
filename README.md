@@ -16,4 +16,10 @@ pytest test_resgress.py other.py # запустить тесты в конкре
 ```
 
 
+## Запуск в докере
+```
+. run_tests.sh
+или
+bash -c ". run_tests.sh" ; echo "exit_code is $?"
+```
 

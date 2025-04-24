@@ -16,6 +16,7 @@ services:
     depends_on:
       - chrome
       # - pinger
+
   pinger: # for troubleshoot
     build:
       context: .
@@ -23,4 +24,10 @@ services:
       network: host
     # network_mode: host
     command: bash -c "ping google.com -c 3 ; sleep 1s"
+
+  easy_test: # for example
+    build:
+      context: .
+      network: host
+    command: python -m pytest test_minimal.py
 

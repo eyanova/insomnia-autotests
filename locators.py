@@ -62,10 +62,10 @@ class create_user():
     SAVE_BUTTON = (By.XPATH, "//button[span[text()='Сохранить']]")
 
     ADD_VISIT_BUTTON = (By.XPATH, "//button[span[text()='Добавить заезд']]")
-    VISIT_STATUS = (By.CSS_SELECTOR, "#updated_arrivals_0_status")
+    VISIT_STATUS = (By.CSS_SELECTOR, "#arrivals_0_status")
     ZAEHAL_STATUS = (By.XPATH, "//div[contains(@class, 'ant-select-item-option-content') and text()='✅ Заехал на поле']")
-    DATE_FROM = (By.CSS_SELECTOR, "#updated_arrivals_0_arrival_date")
-    DATE_TO = (By.CSS_SELECTOR, "#updated_arrivals_0_departure_date")
+    DATE_FROM = (By.CSS_SELECTOR, "#arrivals_0_arrival_date")
+    DATE_TO = (By.CSS_SELECTOR, "#arrivals_0_departure_date")
     TODAY = (By.CSS_SELECTOR, "a.ant-picker-now-btn")
     BAN_BUTTON = (By.XPATH, "//button[span[text()='Заблокировать Волонтера']]")
     BAN_REASON = (By.CSS_SELECTOR, "#form-block_reason")

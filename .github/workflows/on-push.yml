@@ -79,11 +79,16 @@ jobs:
 
       - name: 🍏 Try some testing
         run: |
-          bash run_tests.sh
-        continue-on-error: true
-
-      - run: echo "This job status is ${{ job.status }}."
+          bash run_tests.sh || touch /tmp/testFailed
+        # continue-on-error: true
 
       - name: "Shorter test log"
         run: cat /tmp/tests.short.log
+
+      - name: "Verdict"
+        run: if [ -f /tmp/testFailed ]; then
+          echo "Tests Failed"; exit 1;
+          else
+          echo "Tests Success";
+          fi
 

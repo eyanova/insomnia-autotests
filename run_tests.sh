@@ -5,9 +5,8 @@ docker compose build
 
 echo "Gonna run regress-tests in docker compose"
 
-# docker compose run --remove-orphans easy_test &&
+# docker compose run --remove-orphans easy_test |tee /tmp/tests.log
 docker compose run --remove-orphans tests |tee /tmp/tests.log
-# docker compose run  --remove-orphans easy_test |tee /tmp/tests.log
 exitcode=${PIPESTATUS[0]}
 
 rm -rf /tmp/tests.short.log
@@ -22,6 +21,4 @@ echo -e "\n:VERDICT:"
 [ $exitcode -eq 0 ] &&
     { echo "Tests passed!"; } ||
     { echo "Tests failed!" ; (exit 2); }
-
-# docker compose down
 

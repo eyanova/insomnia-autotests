@@ -8,21 +8,17 @@ services:
     privileged: true
     shm_size: 2g
   tests:
-    # build: .
     build:
       context: .
       network: host
     # command: bash -c "sleep 10s && python -m pytest test_regress.py"
-    # command: bash -c "sleep 10s && python -m pytest --count=3 test_regress.py"
     command: bash -c "sleep 10s && python -m pytest --count=$NREPS test_regress.py"
     depends_on:
       - chrome
-      # - pinger
 
   pinger: # for troubleshoot
     build:
       context: .
-      # dockerfile: Dockerfile
       network: host
     # network_mode: host
     command: bash -c "ping google.com -c 3 ; sleep 1s"

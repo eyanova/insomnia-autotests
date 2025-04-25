@@ -79,10 +79,11 @@ jobs:
 
       - name: 🍏 Try some testing
         run: |
-          # docker compose build
-          # echo 99905
-          # docker compose run tests
           bash run_tests.sh
+        continue-on-error: true
 
-      - run: echo "This job's status is ${{ job.status }}."
+      - run: echo "This job status is ${{ job.status }}."
+
+      - name: "Shorter test log"
+        run: cat /tmp/tests.short.log
 

@@ -12,7 +12,9 @@ services:
     build:
       context: .
       network: host
-    command: bash -c "sleep 10s && python -m pytest test_regress.py"
+    # command: bash -c "sleep 10s && python -m pytest test_regress.py"
+    # command: bash -c "sleep 10s && python -m pytest --count=3 test_regress.py"
+    command: bash -c "sleep 10s && python -m pytest --count=$NREPS test_regress.py"
     depends_on:
       - chrome
       # - pinger
@@ -29,5 +31,5 @@ services:
     build:
       context: .
       network: host
-    command: python -m pytest test_minimal.py
+    command: python -m pytest --count=$NREPS test_minimal.py
 
